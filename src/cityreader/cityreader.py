@@ -9,6 +9,9 @@ class City:
     self.lat = lat
     self.lon = lon
 
+  def __str__(self):
+    return f'{self.name}, {self.lat}, {self.lon}'
+
 # We have a collection of US cities with population over 750,000 stored in the
 # file "cities.csv". (CSV stands for "comma-separated values".)
 #
@@ -39,7 +42,7 @@ cityreader(cities)
 
 # Print the list of cities (name, lat, lon), 1 record per line.
 for c in cities:
-    print((c.name, c.lat, c.lon))
+    print(c)
 
 # STRETCH GOAL!
 #
@@ -101,8 +104,12 @@ def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
 
 
 for item in cityreader_stretch('32','-120','45','-100'):
-  print(f'{item.name}: ({item.lat}, {item.lon})')
+  # print(f'{item.name}: ({item.lat}, {item.lon})')
+  print(item)
 
+print('-------------------------------')
 
+# for item in cityreader_stretch('40','-50','12','120'):
+#   print(f'{item.name}: ({item.lat}, {item.lon})')
 
 
