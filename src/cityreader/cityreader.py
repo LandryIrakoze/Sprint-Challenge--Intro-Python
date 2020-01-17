@@ -1,6 +1,13 @@
+import csv
+
 # Create a class to hold a city location. Call the class "City". It should have
 # fields for name, lat and lon (representing latitude and longitude).
 
+class City:
+  def __init__(self, name, lat, lon):
+    self.name = name
+    self.lat = lat
+    self.lon = lon
 
 # We have a collection of US cities with population over 750,000 stored in the
 # file "cities.csv". (CSV stands for "comma-separated values".)
@@ -20,6 +27,11 @@ def cityreader(cities=[]):
   # TODO Implement the functionality to read from the 'cities.csv' file
   # For each city record, create a new City instance and add it to the 
   # `cities` list
+    with open('cities.csv', 'r') as csv_file:
+      csv_reader = csv.DictReader(csv_file)
+
+      for row in csv_reader:
+        cities.append(City(row['city'], row['lat'], row['lng']))
     
     return cities
 
@@ -27,7 +39,7 @@ cityreader(cities)
 
 # Print the list of cities (name, lat, lon), 1 record per line.
 for c in cities:
-    print(c)
+    print((c.name, c.lat, c.lon))
 
 # STRETCH GOAL!
 #
@@ -59,13 +71,38 @@ for c in cities:
 # Salt Lake City: (40.7774,-111.9301)
 
 # TODO Get latitude and longitude values from the user
+print('-------------------------------')
 
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
+
+  lower_lat = min(float(lat1), float(lat2))
+  lower_lon = min(float(lon1), float(lon2))
+
+  lat_distance = abs(float(lat1) - float(lat2))
+  lon_distance = abs(float(lon1) - float(lon2))
+
+  city_area = ((lower_lat, lower_lat + lat_distance),(lower_lon, lower_lon + lon_distance))
+
   # within will hold the cities that fall within the specified region
   within = []
 
   # TODO Ensure that the lat and lon valuse are all floats
   # Go through each city and check to see if it falls within 
   # the specified coordinates.
+  with open('cities.csv', 'r') as csv_file:
+    csv_reader = csv.DictReader(csv_file)
+
+    for row in csv_reader:
+      if float(row['lat']) >= city_area[0][0] and float(row['lat']) <= city_area[0][1]:
+        if float(row['lng']) >= city_area[1][0] and float(row['lng']) <= city_area[1][1]:
+          within.append(City(row['city'], row['lat'], row['lng']))
 
   return within
+
+
+for item in cityreader_stretch('32','-120','45','-100'):
+  print((item.name, item.lat, item.lon))
+
+
+
+
