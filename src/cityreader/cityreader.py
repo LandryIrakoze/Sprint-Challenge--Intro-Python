@@ -101,7 +101,7 @@ def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
 
 
 for item in cityreader_stretch('32','-120','45','-100'):
-  print((item.name, item.lat, item.lon))
+  print(f'{item.name}: ({item.lat}, {item.lon})')
 
 
 
